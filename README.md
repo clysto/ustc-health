@@ -65,7 +65,11 @@ other_detail=
 
 ## GitHub Actions 自动打卡
 
-结合 GitHub Actions 实现每日自动打卡。首先建立一个 workflow 配置文件(.github/workflows/report.yml):
+结合 GitHub Actions 实现每日自动打卡。
+
+首先点击页面上的 **Use this template** 按钮创建自己的仓库。然后编写一个 workflow 配置文件(.github/workflows/report.yml):
+
+> 可以直接在 GitHub 界面中创建
 
 ```yml
 name: Auto Report
@@ -100,7 +104,14 @@ jobs:
         python run.py
 ```
 
-上面的配置文件中 `cron` 为 `'0 10,21 * * *'`，即北京时间（东八区） 18:00 和 5:00 执行脚本。同时配置文件中使用 Github Secrets 来生成配置文件**避免你的个人信息泄漏**。
+上面的配置文件中 `cron` 为 `'0 10,21 * * *'`，即北京时间（东八区） 18:00 和 5:00 执行脚本，可以根据自己的需要更改时间。同时配置文件中使用 Github Secrets 来生成配置文件**避免你的个人信息泄漏**。
+
+> 这里是生成配置文件的部分，`CONFIG` 就是 Github Secrets 中设置的 `CONFIG` 变量。
+>
+> ```sh
+> echo "$CONFIG" > ./config.ini
+> python run.py
+> ```
 
 **你需要在 Github Secrets 中设置 `CONFIG` 变量，它的值就是 `config.ini` 中的内容。**
 
