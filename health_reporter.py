@@ -13,7 +13,7 @@ class HealthReporter:
 
     def report(self, health_info: dict):
         session = requests.Session()
-        logging.info(f"使用学号 {self.credential.student_id} 登陆")
+        logging.info(f"使用学号和密码登陆")
         try:
             result = self.credential.login(
                 session,

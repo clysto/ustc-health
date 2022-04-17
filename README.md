@@ -57,7 +57,7 @@ other_detail=
 ```sh
 ./run.py
 2022-04-17 19:04:47,808  INFO      读取配置文件 config.ini
-2022-04-17 19:04:47,809  INFO      使用学号 SA******** 登陆
+2022-04-17 19:04:47,809  INFO      使用学号和密码登陆
 2022-04-17 19:04:49,395  INFO      登陆成功
 2022-04-17 19:04:49,396  INFO      开始上报健康信息
 2022-04-17 19:04:49,901  INFO      上报成功，最近一次上报是32分钟36秒 之前，请每日按时打卡
@@ -69,7 +69,7 @@ other_detail=
 
 首先点击页面上的 **Use this template** 按钮创建自己的仓库。然后编写一个 workflow 配置文件(.github/workflows/report.yml):
 
-> 可以直接在 GitHub 界面中创建
+> 可以直接在 GitHub 界面中创建，点击 **Add file** 按钮，输入新建文件的路径即可。
 
 ```yml
 name: Auto Report
@@ -101,7 +101,7 @@ jobs:
         CONFIG: ${{ secrets.config }}
       run: |
         echo "$CONFIG" > ./config.ini
-        python run.py
+        python3 run.py
 ```
 
 上面的配置文件中 `cron` 为 `'0 10,21 * * *'`，即北京时间（东八区） 18:00 和 5:00 执行脚本，可以根据自己的需要更改时间。同时配置文件中使用 Github Secrets 来生成配置文件**避免你的个人信息泄漏**。
@@ -110,9 +110,9 @@ jobs:
 >
 > ```sh
 > echo "$CONFIG" > ./config.ini
-> python run.py
+> python3 run.py
 > ```
 
-**你需要在 Github Secrets 中设置 `CONFIG` 变量，它的值就是 `config.ini` 中的内容。**
+**你需要在 Github Secrets (Settings / Secrets / Actions / New repository secret) 中设置 `CONFIG` 变量，它的值就是 `config.ini` 中的内容。**
 
-以上步骤之后，将代码 push 到 GitHub，在 Actions 选项卡中允许运行即可。
+以上步骤之后，将代码 push 到 GitHub，在 Actions 设置 (Settings / Actions / Allow all actions and reusable workflows) 中允许运行即可。
